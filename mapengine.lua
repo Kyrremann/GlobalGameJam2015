@@ -2,11 +2,16 @@ local class = require "middleclass"
 
 local Engine = class('MapEngine')
 
+local fwt = 0 -- firework timer
+
 function Engine:initialize(path)
    self.map = require(tostring(path))
    self.level = 1
    self.shapes = {}
    self.status = nil
+
+   local firework = require 'firework.FireworkEngine'
+   fw = firework()
 end
 
 local function drawFrame()
@@ -42,6 +47,18 @@ function Engine:update(dt)
          end
       end
    end
+
+   if self.status == 'win' then
+      fwt = fwt + dt
+      fw:update(dt)
+      if fwt > 0.2 then
+         fwt = fwt - 0.2
+         fw:addFirework(
+            GRID_SIZE + math.random(gr.getWidth() - GRID_SIZE * 2),
+            GRID_SIZE + math.random(gr.getHeight() - GRID_SIZE * 2)
+         )
+      end
+   end
 end
 
 local function printGoal(goal)
@@ -52,6 +69,8 @@ local function printGoal(goal)
 end
 
 function Engine:draw()
+   fw:draw()
+
    gr.setLineWidth(1)
    local cl = self.map[self.level]
    local m = cl.map
