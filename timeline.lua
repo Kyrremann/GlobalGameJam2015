@@ -11,6 +11,7 @@ local state = 'running' -- player state
 local maxtime = 12
 local dotfreq = 0.025 -- dot draw frequency
 local weight = 5 -- timeline weight
+local margin = 50 -- margin to timeline dots
 
 tl.rec = {} -- event record
 
@@ -113,26 +114,32 @@ function tl.update(dt)
 end
 
 function drawdots(lim)
-   local OFFSET = 50
-
    for i=1,lim do
       gr.circle(
          'fill',
-         lmap(dots[i].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
-         OFFSET + dots[i].y,
+         lmap(dots[i].x, 0, maxtime, margin, gr.getWidth() - margin),
+         margin + dots[i].y,
          weight
       )
       gr.line(
-         lmap(dots[i].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
-         OFFSET + dots[i].y,
-         lmap(dots[i+1].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
-         OFFSET + dots[i+1].y
+         lmap(dots[i].x, 0, maxtime, margin, gr.getWidth() - margin),
+         margin + dots[i].y,
+         lmap(dots[i+1].x, 0, maxtime, margin, gr.getWidth() - margin),
+         margin + dots[i+1].y
       )
    end
 end
 
-function tl.draw()
+function drawhelpers()
+   gr.setColor(180, 180, 180)
 
+   for x=margin,gr.getWidth() - margin,100 do
+      gr.line(x, margin - 10, x, margin + 10)
+   end
+end
+
+function tl.draw()
+   drawhelpers()
 
    gr.setColor(255, 255, 255)
    gr.setLineWidth(weight * 2)
