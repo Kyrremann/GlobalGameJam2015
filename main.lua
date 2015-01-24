@@ -118,13 +118,13 @@ end
 function drawTitle()
    gr.setColor(255, 255, 255)
    gr.setFont(amaticBold128)
-   gr.printf("Some peoples",
+   gr.printf("Some people's",
              0, gr.getHeight() / 15, gr.getWidth(), "center")
    gr.setFont(amaticBold64)
    gr.printf("contribution to",
              0, gr.getHeight() / 3.7, gr.getWidth(), "center")
    gr.setFont(amaticBold128)
-   gr.printf("Game Jam 2015",
+   gr.printf("Global Game Jam 2015",
              0, gr.getHeight() / 2.5, gr.getWidth(), "center")
    gr.setFont(amaticRegular64)
 end
