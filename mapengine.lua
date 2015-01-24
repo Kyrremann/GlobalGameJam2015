@@ -48,6 +48,7 @@ function Engine:update(dt)
 end
 
 function Engine:draw()
+   gr.setLineWidth(1)
    local cl = self.map[self.level]
    local m = cl.map
    

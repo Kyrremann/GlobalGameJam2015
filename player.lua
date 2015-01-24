@@ -2,16 +2,21 @@ local class = require "middleclass"
 
 local Player = class('Player')
 
+Player.static.JUMP = 1
+Player.static.DUCK = 2
+
 function Player:initialize(name, x, y, imagePath)
    self.name = name
+   self.image = gr.newImage("images/idle.png")
+   self.jump = gr.newImage("images/jump.png")
+   self.duckImage = gr.newImage("images/duck.png")
    self.x = x
    self.y = y
-   self.w = 82
-   self.h = 150
+   self.w = self.image:getWidth()
+   self.h = self.image:getHeight()
    self.speed = 250
-   self.velocity = { x = 50, y = 0 }
-   self.image = gr.newImage(imagePath)
-   self.jump = gr.newImage("images/jump.png")
+   self.velocity = { x = 1, y = 0 }
+   self.duck = false
    
    world:add(self, self.x, self.y, self.w, self.h)
 end
@@ -51,12 +56,35 @@ function Player:draw()
                    self.x, self.y,
                    self.w, self.h)
    end
-   if ground then
-      gr.draw(self.image,
+
+   if self.duck then
+      self.w = self.image:getWidth()
+      self.h = self.duckImage:getHeight()
+      gr.draw(self.duckImage,
               self.x, self.y)
-   else
+   elseif not ground then
+      self.w = self.jump:getWidth()
+      self.h = self.jump:getHeight()
       gr.draw(self.jump,
               self.x, self.y)
+   else
+      self.w = self.image:getWidth()
+      self.h = self.image:getHeight()
+      world:update(self, self.x, self.y, self.w, self.h)
+      gr.draw(self.image,
+              self.x, self.y)
+   end
+   world:update(self, self.x, self.y, self.w, self.h)
+end
+
+function Player:action(action)
+   if Player.JUMP == action then
+      if ground then
+         self.velocity.y = jump_height
+         ground = false
+      end
+   elseif Player.DUCK == action then
+      self.duck = true
    end
 end
 

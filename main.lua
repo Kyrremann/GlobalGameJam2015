@@ -66,10 +66,9 @@ function love.keypressed(key, isrepeat)
          debug = not debug
          return
       elseif key == " " then
-         if ground then
-            p.velocity.y = jump_height
-            ground = false
-         end
+         p:action(Player.JUMP)
+      elseif key == "down" then
+         p:action(Player.DUCK)
       elseif key == 'd' and not isrepeat then
          tl.startrecord()
       elseif key == 'w' and not isrepeat then
@@ -92,6 +91,8 @@ function love.keyreleased(key)
    elseif gameMode == GAME then
       if key == 'd' then
          tl.endrecord()
+      elseif key == 'down' then
+         p.duck = false
       elseif key == 's' then
          tl.event('unduck')
       end
