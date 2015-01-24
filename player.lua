@@ -113,6 +113,7 @@ function Player:action(action)
       if ground then
          self.velocity.y = jump_height
          ground = false
+         au.play(soundJump)
       end
    elseif Player.DUCK == action then
       self.duck = true
