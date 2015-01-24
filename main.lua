@@ -4,8 +4,8 @@ function love.load()
    local bump = require "bump"
    world = bump.newWorld(100)
 
-   gravity = 400
-   jump_height = 300
+   gravity = 1500
+   jump_height = 600
    ground = false
    zero_ground = false
 

@@ -48,7 +48,7 @@ function tl.playback()
 end
 
 function tl.event(event)
-   local JUMPDURATION = 0.8
+   local JUMPDURATION = 0.5
 
    if start and not (state == 'jumping') then
       print(event, ' at ', timedt())
