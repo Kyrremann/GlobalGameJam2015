@@ -7,8 +7,6 @@ ev = love.event
 so = love.sound
 au = love.audio
 
-HC = require 'HardonCollider'
-
 ke.setKeyRepeat(.01, .01)
 
 debug = false
