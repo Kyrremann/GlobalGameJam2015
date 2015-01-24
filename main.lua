@@ -66,7 +66,9 @@ function love.keypressed(key, isrepeat)
          debug = not debug
          return
       elseif (key == 'd' or key == 'right') and not isrepeat then
-         tl.startrecord()
+         if not p.playing then
+            tl.startrecord()
+         end
       elseif (key == 'w' or key == 'up') and not isrepeat then
          tl.event('jump')
       elseif (key == 's' or key == 'down') and not isrepeat then
@@ -86,8 +88,10 @@ function love.keyreleased(key)
    if gameMode == MENU then
    elseif gameMode == GAME then
       if key == 'd' or key == 'right' then
-         p:playitoff(tl.rec)
-         tl.endrecord()
+         if not p.playing then
+            p:playitoff(tl.rec)
+            tl.endrecord()
+         end
       elseif key == 's' or key == 'down' then
          tl.event('unduck')
       elseif key == 'r' then

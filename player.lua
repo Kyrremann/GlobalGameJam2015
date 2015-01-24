@@ -28,6 +28,7 @@ function Player:init(x, y)
    self.speed = 0
    self.velocity = { x = 1, y = 0 }
    self.duck = false
+   self.playing = false
    world:update(self, self.x, self.y, self.w, self.h)
 end
 
@@ -122,6 +123,7 @@ end
 
 -- play off the moves stored in record
 function Player:playitoff(record)
+   self.playing = true
    self.speed = 250
    rec = record
    playt = 0
