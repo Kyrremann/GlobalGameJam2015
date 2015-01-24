@@ -29,6 +29,7 @@ function tl.reset()
    dots = {}
    dtloc = 0
    jumptimer = 0
+   state = 'running'
 end
 
 function tl.endrecord()
