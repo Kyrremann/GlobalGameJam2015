@@ -1,6 +1,14 @@
 function love.load()
    require "setup"
 
+   -- fonts
+   amaticRegular64 = gr.newFont("fonts/AmaticSC-Regular.ttf", 64)
+   amaticBold64 = gr.newFont("fonts/Amatic-Bold.ttf", 64)
+   amaticBold128 = gr.newFont("fonts/Amatic-Bold.ttf", 128)
+
+   -- sounds
+   soundJump = au.newSource("sounds/jump.wav")
+
    local bump = require "bump"
    world = bump.newWorld(100)
 
@@ -16,7 +24,7 @@ function love.load()
    GAME = 1
    END = 2
 
-   gameMode = GAME
+   gameMode = MENU
 
    MapEngine = require "mapengine"
    mapengine = MapEngine:new("levels")
@@ -106,13 +114,20 @@ function drawBackground()
 end
 
 function drawTitle()
+   gr.setColor(255, 255, 255)
+   gr.setFont(amaticBold128)
+   gr.printf("Some peoples",
+             0, gr.getHeight() / 15, gr.getWidth(), "center")
+   gr.setFont(amaticBold64)
+   gr.printf("contribution to",
+             0, gr.getHeight() / 3.7, gr.getWidth(), "center")
+   gr.setFont(amaticBold128)
    gr.printf("Game Jam 2015",
-             0, gr.getHeight() / 10, gr.getWidth(), "center")
+             0, gr.getHeight() / 2.5, gr.getWidth(), "center")
+   gr.setFont(amaticRegular64)
 end
 
 function resetLevel()
-   gravity = 400
-   jump_height = 300
    ground = false
    zero_ground = false
 
