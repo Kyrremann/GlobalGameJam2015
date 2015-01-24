@@ -65,11 +65,11 @@ function love.keypressed(key, isrepeat)
       elseif key == 'f9' then
          debug = not debug
          return
-      elseif key == 'd' or key == 'right' and not isrepeat then
+      elseif (key == 'd' or key == 'right') and not isrepeat then
          tl.startrecord()
-      elseif key == 'w' or key == 'up' and not isrepeat then
+      elseif (key == 'w' or key == 'up') and not isrepeat then
          tl.event('jump')
-      elseif key == 's' or key == 'down' and not isrepeat then
+      elseif (key == 's' or key == 'down') and not isrepeat then
          tl.event('duck')
       end
 
