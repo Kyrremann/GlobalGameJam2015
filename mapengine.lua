@@ -55,14 +55,21 @@ function Engine:draw()
          if shape then
             if shape.x > gr.getWidth() then break end
             if shape.x > 0 then
-               gr.rectangle("line",
-                            shape.x, shape.y,
-                            shape.w, shape.h)
+               if debug then
+                  gr.rectangle("line",
+                               shape.x, shape.y,
+                               shape.w, shape.h)
+               end
+               gr.draw(shape.image, shape.x, shape.y)
             end
          end
       end
    end
    drawFrame()
+   gr.setColor(255, 255, 255)
+   gr.setFont(amaticRegular64)
+   gr.printf(cl.goal,
+             0, 100, gr.getWidth(), "center")
 end
 
 function Engine:removeShapes()
@@ -93,11 +100,18 @@ function Engine:start(level)
    for y, vy in ipairs(m) do
       self.shapes[y] = {}
       for x, vx in ipairs(vy) do
-         if vx == 1 then
+         if vx >= 1 then
             local shape = { 
                x = x * GRID_SIZE, y = y * GRID_SIZE, 
                w = GRID_SIZE, h = GRID_SIZE
             }
+
+            if vx == 1 then
+               shape.image = gr.newImage("images/grass.png")
+            elseif vx == 3 then
+               shape.image = gr.newImage("images/elementWood017.png")
+            end
+            
             self.shapes[y][x] = shape
             world:add(shape, shape.x, shape.y, shape.w, shape.h)
          end
