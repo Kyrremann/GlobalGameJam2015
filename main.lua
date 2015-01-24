@@ -28,6 +28,7 @@ function love.update(dt)
    elseif gameMode == GAME then
       mapengine:update(dt)
       p:update(dt)
+      tl.update(dt)
    elseif gameMode == END then
    end
 end
@@ -39,16 +40,18 @@ function love.draw()
    elseif gameMode == GAME then
       mapengine:draw()
       p:draw()
+      tl.draw()
    elseif gameMode == END then
    end
 end
 
-function love.keypressed(key)
+function love.keypressed(key, isrepeat)
    if gameMode == MENU then
       if key == "escape" then
          love.event.push('quit')
          return
       elseif key == "return" then
+         gameMode = GAME
          return
       elseif key == 'f9' then
          debug = not debug
@@ -67,6 +70,12 @@ function love.keypressed(key)
             p.velocity.y = jump_height
             ground = false
          end
+      elseif key == 'd' and not isrepeat then
+         tl.startrecord()
+      elseif key == 'w' and not isrepeat then
+         tl.event('jump')
+      elseif key == 's' and not isrepeat then
+         tl.event('duck')
       end
 
    elseif gameMode == END then
@@ -81,6 +90,11 @@ end
 function love.keyreleased(key)
    if gameMode == MENU then
    elseif gameMode == GAME then
+      if key == 'd' then
+         tl.endrecord()
+      elseif key == 's' then
+         tl.event('unduck')
+      end
    elseif gameMode == END then
    end
 end
