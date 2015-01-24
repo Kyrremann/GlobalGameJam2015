@@ -81,7 +81,7 @@ function Engine:removeShapes()
 end
 
 function Engine:start(level)
-   if shapes then
+   if self.shapes and #self.shapes > 0 then
       self:removeShapes()
    end
    self.shapes = {}
