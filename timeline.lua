@@ -22,7 +22,10 @@ end
 
 function tl.startrecord ()
    print('start recording')
+   dots = {}
    start = ti.getTime()
+   dtloc = 0
+   jumptimer = 0
 end
 
 function tl.endrecord ()
