@@ -65,7 +65,25 @@ function Engine:draw()
    drawFrame()
 end
 
+function Engine:removeShapes()
+   local cl = self.map[self.level]
+   local m = cl.map
+   
+   for y=1, #m do
+      for x=1, #m[y] do
+	 gr.setColor(250, 250, 250)
+         local shape = self.shapes[y][x]
+         if shape then
+            world:remove(shape)
+         end
+      end
+   end   
+end
+
 function Engine:start(level)
+   if shapes then
+      self:removeShapes()
+   end
    self.shapes = {}
    self.level = level
 
