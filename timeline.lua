@@ -20,7 +20,7 @@ local function lmap(t, a1, a2, b1, b2)
    return b1 + (((t - a1) / (a2 - a1)) * (b2 - b1))
 end
 
-function tl.startrecord ()
+function tl.startrecord()
    print('start recording')
    dots = {}
    start = ti.getTime()
@@ -28,7 +28,13 @@ function tl.startrecord ()
    jumptimer = 0
 end
 
-function tl.endrecord ()
+function tl.reset()
+   dots = {}
+   dtloc = 0
+   jumptimer = 0
+end
+
+function tl.endrecord()
    print('end recording')
    table.insert(tl.rec, {at=timedt(), action='stop'})
    for k, v in pairs(tl.rec) do
