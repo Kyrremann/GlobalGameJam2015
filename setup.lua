@@ -12,4 +12,4 @@ tl = require 'timeline'
 ke.setKeyRepeat(.01, .01)
 
 debug = false
-GRID_SIZE = 96
+GRID_SIZE = 100

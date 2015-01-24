@@ -12,8 +12,8 @@ local playt = 0 -- time since playback started
 
 function Player:initialize(name, x, y)
    self.name = name
-   self.image = gr.newImage("images/idle.png")
-   self.jump = gr.newImage("images/jump.png")
+   self.image = gr.newImage("images/idle2.png")
+   self.jump = gr.newImage("images/jump2.png")
    self.duckImage = gr.newImage("images/duck.png")
    
    world:add(self, x, y, 10, 10)
@@ -121,6 +121,7 @@ function Player:draw()
    end
 
    if self.duck then
+      print(self.h, self.duckImage:getHeight())
       self.h = self.duckImage:getHeight()
       gr.draw(self.duckImage,
               self.x, self.y)

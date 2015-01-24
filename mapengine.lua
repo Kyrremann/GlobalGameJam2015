@@ -130,12 +130,18 @@ function Engine:start(level)
             }
             
             if vx == 1 then
-               shape.image = gr.newImage("images/grass.png")
+               shape.image = gr.newImage("images/jord.png")
             elseif vx == 2 then
                shape.image = gr.newImage("images/goal.png")
                shape.win = true
             elseif vx == 3 then
-               shape.image = gr.newImage("images/elementWood017.png")
+               shape.image = gr.newImage("images/jord2.png")
+            elseif vx == 4 then
+               shape.image = gr.newImage("images/jord3.png")
+            elseif vx == 5 then
+               shape.image = gr.newImage("images/jord4.png")
+            elseif vx == 6 then
+               shape.image = gr.newImage("images/jord5.png")
             end
             
             self.shapes[y][x] = shape
