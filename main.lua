@@ -1,18 +1,33 @@
 function love.load()
    require "setup"
 
+   local bump = require "bump"
+   world = bump.newWorld(100)
+
+   gravity = 400
+   jump_height = 300
+   ground = false
+   zero_ground = false
+
+   Player = require "player"
+   p = Player:new('Sjiraff', 100, 100, "images/sprite_1.png")
+   
    MENU = 0
    GAME = 1
    END = 2
 
-   gameMode = MENU
+   gameMode = GAME
 
-   math.randomseed(os.time())
+   MapEngine = require "mapengine"
+   mapengine = MapEngine:new("levels")
+   mapengine:start(1)
 end
 
 function love.update(dt)
    if gameMode == MENU then
    elseif gameMode == GAME then
+      mapengine:update(dt)
+      p:update(dt)
    elseif gameMode == END then
    end
 end
@@ -22,6 +37,8 @@ function love.draw()
    if gameMode == MENU then
       drawTitle()
    elseif gameMode == GAME then
+      mapengine:draw()
+      p:draw()
    elseif gameMode == END then
    end
 end
@@ -45,6 +62,11 @@ function love.keypressed(key)
       elseif key == 'f9' then
          debug = not debug
          return
+      elseif key == " " then
+         if ground then
+            p.velocity.y = jump_height
+            ground = false
+         end
       end
 
    elseif gameMode == END then

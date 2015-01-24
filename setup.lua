@@ -7,8 +7,7 @@ ev = love.event
 so = love.sound
 au = love.audio
 
-require "math"
-require "middleclass"
+HC = require 'HardonCollider'
 
 ke.setKeyRepeat(.01, .01)
 
