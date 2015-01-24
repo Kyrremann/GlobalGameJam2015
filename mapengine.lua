@@ -6,6 +6,7 @@ function Engine:initialize(path)
    self.map = require(tostring(path))
    self.level = 1
    self.shapes = {}
+   self.status = nil
 end
 
 local function drawFrame()
@@ -43,6 +44,13 @@ function Engine:update(dt)
    end
 end
 
+local function printGoal(goal)
+   gr.setColor(255, 255, 255)
+   gr.setFont(amaticRegular64)
+   gr.printf(goal,
+             0, 100, gr.getWidth(), "center")
+end
+
 function Engine:draw()
    gr.setLineWidth(1)
    local cl = self.map[self.level]
@@ -70,10 +78,20 @@ function Engine:draw()
       end
    end
    drawFrame()
-   gr.setColor(255, 255, 255)
-   gr.setFont(amaticRegular64)
-   gr.printf(cl.goal,
-             0, 100, gr.getWidth(), "center")
+   if not self.status then
+      printGoal(cl.goal)
+   elseif self.status == 'lost' then
+      gr.setColor(255, 255, 255)
+      gr.setFont(amaticBold128)
+      gr.printf("Sorry, you lost!\n'R'etry?",
+                0, 100, gr.getWidth(), "center")
+   elseif self.status == 'win' then
+      gr.setColor(255, 255, 255)
+      gr.setFont(amaticBold128)
+      gr.printf("Victory!!\n'N'ext level?",
+                0, 100, gr.getWidth(), "center")
+      
+   end
 end
 
 function Engine:removeShapes()
@@ -97,6 +115,7 @@ function Engine:start(level)
    end
    self.shapes = {}
    self.level = level
+   self.status = nil
 
    local cl = self.map[level]
    local m = cl.map

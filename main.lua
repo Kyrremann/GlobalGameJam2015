@@ -140,6 +140,8 @@ end
 
 function completedLevel(status)
    if status == 'win' then
+      mapengine.status = status
    elseif status == 'lost' then
+      mapengine.status = status
    end
 end
