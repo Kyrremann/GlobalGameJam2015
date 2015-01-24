@@ -10,7 +10,7 @@ function love.load()
    zero_ground = false
 
    Player = require "player"
-   p = Player:new('Sjiraff', 100, 100, "images/sprite_1.png")
+   p = Player:new('Sjiraff', 100, 100, "images/idle.png")
    
    MENU = 0
    GAME = 1

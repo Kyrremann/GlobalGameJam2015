@@ -16,16 +16,16 @@ local function drawFrame()
    gr.setColor(40, 40, 40)
    gr.rectangle('fill',
                 0, 0,
-                100, gr.getHeight())
+                GRID_SIZE, gr.getHeight())
    gr.rectangle('fill',
                 0, 0,
-                gr.getWidth(), 100)
+                gr.getWidth(), GRID_SIZE)
    gr.rectangle('fill',
-                0, gr.getHeight() - 100,
-                gr.getWidth(), 100)
+                0, gr.getHeight() - GRID_SIZE,
+                gr.getWidth(), GRID_SIZE)
    gr.rectangle('fill',
-                gr.getWidth() - 100, 0,
-                100, gr.getHeight())
+                gr.getWidth() - GRID_SIZE, 0,
+                GRID_SIZE, gr.getHeight())
 end
 
 function Engine:update(dt)
@@ -40,7 +40,7 @@ function Engine:update(dt)
             local shape = self.shapes[y][x]
             if shape then
                shape.x = shape.x - p.speed * dt
-               shape.x, shape.y = world:move(shape, shape.x, shape.y)
+               world:update(shape, shape.x, shape.y)
             end
          end
       end
@@ -56,9 +56,12 @@ function Engine:draw()
 	 gr.setColor(250, 250, 250)
          local shape = self.shapes[y][x]
          if shape then
-            gr.rectangle("line",
-                         shape.x, shape.y,
-                         shape.w, shape.h)
+            if shape.x > gr.getWidth() then break end
+            if shape.x > 0 then
+               gr.rectangle("line",
+                            shape.x, shape.y,
+                            shape.w, shape.h)
+            end
          end
       end
    end
@@ -75,8 +78,8 @@ function Engine:start(level)
       for x, vx in ipairs(vy) do
          if vx == 1 then
             local shape = { 
-               x = x * 100, y = y * 100, 
-               w = 100, h = 100
+               x = x * GRID_SIZE, y = y * GRID_SIZE, 
+               w = GRID_SIZE, h = GRID_SIZE
             }
             self.shapes[y][x] = shape
             world:add(shape, shape.x, shape.y, shape.w, shape.h)

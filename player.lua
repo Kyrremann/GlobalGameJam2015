@@ -9,22 +9,29 @@ function Player:initialize(name, x, y, imagePath)
    self.w = 82
    self.h = 150
    self.speed = 250
-   self.velocity = { x = 0, y = 0 }
+   self.velocity = { x = 50, y = 0 }
    self.image = gr.newImage(imagePath)
+   self.jump = gr.newImage("images/jump.png")
    
    world:add(self, self.x, self.y, self.w, self.h)
 end
 
 function Player:update(dt)
-   local dx, dy = 0, 0
-   if love.keyboard.isDown('right') then
-      dx = self.speed * dt
-   elseif love.keyboard.isDown('left') then
-      dx = -self.speed * dt
-   end
+   if self.speed ~= 0 then
+      local dx = self.speed * dt
 
-   if dx ~= 0 or dy ~= 0 then
-      self.x, self.y = world:move(self, self.x + dx, self.y + dy)
+      if dx ~= 0 then
+         dx = dx + self.x
+         self.x, self.y = world:move(self, dx, self.y)
+      end
+
+      if dx < self.x then
+         self.x = dx
+         world:update(self, self.x, self.y)
+         self.speed = 0
+      elseif dx ~= self.x then
+         self.speed = 0
+      end
    end
    
    if not zero_ground then
@@ -44,8 +51,13 @@ function Player:draw()
                    self.x, self.y,
                    self.w, self.h)
    end
-   gr.draw(self.image,
-           self.x, self.y)
+   if ground then
+      gr.draw(self.image,
+              self.x, self.y)
+   else
+      gr.draw(self.jump,
+              self.x, self.y)
+   end
 end
 
 return Player

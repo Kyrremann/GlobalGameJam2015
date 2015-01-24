@@ -10,3 +10,4 @@ au = love.audio
 ke.setKeyRepeat(.01, .01)
 
 debug = false
+GRID_SIZE = 96
