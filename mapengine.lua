@@ -51,8 +51,12 @@ function Engine:draw()
    for y=1, #m do
       for x=1, #m[y] do
 	 gr.setColor(250, 250, 250)
+
          local shape = self.shapes[y][x]
          if shape then
+            if shape.win then
+               gr.setColor(255, 255, 0)
+            end
             if shape.x > gr.getWidth() then break end
             if shape.x > 0 then
                if debug then
@@ -105,9 +109,12 @@ function Engine:start(level)
                x = x * GRID_SIZE, y = y * GRID_SIZE, 
                w = GRID_SIZE, h = GRID_SIZE
             }
-
+            
             if vx == 1 then
                shape.image = gr.newImage("images/grass.png")
+            elseif vx == 2 then
+               shape.image = gr.newImage("images/goal.png")
+               shape.win = true
             elseif vx == 3 then
                shape.image = gr.newImage("images/elementWood017.png")
             end

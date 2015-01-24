@@ -22,6 +22,8 @@ function love.load()
    
    MENU = 0
    GAME = 1
+   GAME_WIN = 1.2
+   GAME_LOST = 1.1
    END = 2
 
    gameMode = MENU
@@ -134,4 +136,10 @@ function resetLevel()
    tl.reset()
    p:init(100, 100)
    mapengine:start(1)
+end
+
+function completedLevel(status)
+   if status == 'win' then
+   elseif status == 'lost' then
+   end
 end

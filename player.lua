@@ -32,6 +32,30 @@ function Player:init(x, y)
    world:update(self, self.x, self.y, self.w, self.h)
 end
 
+-- standing on a winning tile?
+function Player:wintile()
+   local underme1 = world:queryPoint(
+      self.x,
+      self.y + self.h + 1
+   )
+   local underme2 = world:queryPoint(
+      self.x + self.w,
+      self.y + self.h + 1
+   )
+
+   for k, v in pairs(underme1) do
+      if v.win then
+         return true
+      end
+   end
+   for k, v in pairs(underme2) do
+      if v.win then
+         return true
+      end
+   end
+   return false
+end
+
 function Player:update(dt)
    if state == 'playing' then
       playt = playt + dt
@@ -48,6 +72,11 @@ function Player:update(dt)
                self:action(Player.UNDUCK)
             elseif event.action == 'stop' then
                self.speed = 0
+               if self:wintile() then
+                  completedLevel('win')
+               else
+                  completedLevel('lost')
+               end
                state = 'idle'
             end
 
