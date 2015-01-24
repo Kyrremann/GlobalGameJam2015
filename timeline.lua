@@ -131,7 +131,7 @@ function drawdots(lim)
 end
 
 function drawhelpers()
-   gr.setColor(180, 180, 180)
+   gr.setColor(90, 90, 90)
 
    for x=margin,gr.getWidth() - margin,100 do
       gr.line(x, margin - 10, x, margin + 10)
