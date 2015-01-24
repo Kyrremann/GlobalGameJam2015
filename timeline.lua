@@ -1,6 +1,6 @@
 local t = 0 -- time since start
 local tl = {} -- timeline namespace
-local rec = {} -- event record
+
 local dots = {} -- dots to draw
 local start = nil -- start time
 local dtloc = 0 -- how much time has passed
@@ -8,6 +8,8 @@ local dtloc = 0 -- how much time has passed
 local jumptimer = 0 -- jump timer (0 is grounded)
 local state = 'running' -- player state
 local maxtime = 12
+
+tl.rec = {} -- event record
 
 local function timedt()
    return ti.getTime() - start
@@ -25,8 +27,9 @@ end
 
 function tl.endrecord ()
    print('end recording')
-   for k, v in pairs(rec) do
-      print(k, v[1], v[2])
+   table.insert(tl.rec, {at=timedt(), action='stop'})
+   for k, v in pairs(tl.rec) do
+      print(k, v.at, v.action)
    end
    start = nil
 end
@@ -36,7 +39,7 @@ function tl.event(event)
 
    if start and not (state == 'jumping') then
       print(event, ' at ', timedt())
-      table.insert(rec, { timedt(), event })
+      table.insert(tl.rec, {at=timedt(), action=event})
 
       if event == 'duck' then
          state = 'ducking'

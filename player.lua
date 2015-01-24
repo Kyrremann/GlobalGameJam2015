@@ -4,6 +4,11 @@ local Player = class('Player')
 
 Player.static.JUMP = 1
 Player.static.DUCK = 2
+Player.static.UNDUCK = 3
+
+local state = 'idle' -- player state
+local rec = nil -- playback record
+local playt = 0 -- time since playback started
 
 function Player:initialize(name, x, y, imagePath)
    self.name = name
@@ -14,7 +19,7 @@ function Player:initialize(name, x, y, imagePath)
    self.y = y
    self.w = self.image:getWidth()
    self.h = self.image:getHeight()
-   self.speed = 250
+   self.speed = 0
    self.velocity = { x = 1, y = 0 }
    self.duck = false
    
@@ -22,6 +27,29 @@ function Player:initialize(name, x, y, imagePath)
 end
 
 function Player:update(dt)
+   if state == 'playing' then
+      playt = playt + dt
+
+      if #rec > 0 then
+         local event = rec[1]
+
+         if event.at <= playt then
+            if event.action == 'jump' then
+               self:action(Player.JUMP)
+            elseif event.action == 'duck' then
+               self:action(Player.DUCK)
+            elseif event.action == 'unduck' then
+               self:action(Player.UNDUCK)
+            elseif event.action == 'stop' then
+               self.speed = 0
+               state = 'idle'
+            end
+
+            table.remove(rec, 1)
+         end
+      end
+   end
+
    if self.speed ~= 0 then
       local dx = self.speed * dt
 
@@ -85,7 +113,17 @@ function Player:action(action)
       end
    elseif Player.DUCK == action then
       self.duck = true
+   elseif Player.UNDUCK == action then
+      self.duck = false
    end
+end
+
+-- play off the moves stored in record
+function Player:playitoff(record)
+   self.speed = 250
+   rec = record
+   playt = 0
+   state = 'playing'
 end
 
 return Player

@@ -90,6 +90,7 @@ function love.keyreleased(key)
    if gameMode == MENU then
    elseif gameMode == GAME then
       if key == 'd' then
+         p:playitoff(tl.rec)
          tl.endrecord()
       elseif key == 'down' then
          p.duck = false
