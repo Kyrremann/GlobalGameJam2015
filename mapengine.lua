@@ -6,10 +6,6 @@ function Engine:initialize(path)
    self.map = require(tostring(path))
    self.level = 1
    self.shapes = {}
-   self.camera = {
-      x = 0,
-      y = 0
-   }
 end
 
 local function drawFrame()
@@ -70,9 +66,11 @@ function Engine:draw()
 end
 
 function Engine:start(level)
+   self.shapes = {}
+   self.level = level
+
    local cl = self.map[level]
    local m = cl.map
-   self.shapes = {}
 
    for y, vy in ipairs(m) do
       self.shapes[y] = {}

@@ -10,7 +10,7 @@ function love.load()
    zero_ground = false
 
    Player = require "player"
-   p = Player:new('Sjiraff', 100, 100, "images/idle.png")
+   p = Player:new('Sjiraff', 100, 100)
    
    MENU = 0
    GAME = 1
@@ -65,15 +65,11 @@ function love.keypressed(key, isrepeat)
       elseif key == 'f9' then
          debug = not debug
          return
-      elseif key == " " then
-         p:action(Player.JUMP)
-      elseif key == "down" then
-         p:action(Player.DUCK)
-      elseif key == 'd' and not isrepeat then
+      elseif key == 'd' or key == 'right' and not isrepeat then
          tl.startrecord()
-      elseif key == 'w' and not isrepeat then
+      elseif key == 'w' or key == 'up' and not isrepeat then
          tl.event('jump')
-      elseif key == 's' and not isrepeat then
+      elseif key == 's' or key == 'down' and not isrepeat then
          tl.event('duck')
       end
 
@@ -89,13 +85,13 @@ end
 function love.keyreleased(key)
    if gameMode == MENU then
    elseif gameMode == GAME then
-      if key == 'd' then
+      if key == 'd' or key == 'right' then
          p:playitoff(tl.rec)
          tl.endrecord()
-      elseif key == 'down' then
-         p.duck = false
-      elseif key == 's' then
+      elseif key == 's' or key == 'down' then
          tl.event('unduck')
+      elseif key == 'r' then
+         resetLevel()
       end
    elseif gameMode == END then
    end
@@ -107,4 +103,15 @@ end
 function drawTitle()
    gr.printf("Game Jam 2015",
              0, gr.getHeight() / 10, gr.getWidth(), "center")
+end
+
+function resetLevel()
+   gravity = 400
+   jump_height = 300
+   ground = false
+   zero_ground = false
+
+   tl.reset()
+   p:init(100, 100)
+   mapengine:start(1)
 end

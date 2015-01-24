@@ -10,11 +10,17 @@ local state = 'idle' -- player state
 local rec = nil -- playback record
 local playt = 0 -- time since playback started
 
-function Player:initialize(name, x, y, imagePath)
+function Player:initialize(name, x, y)
    self.name = name
    self.image = gr.newImage("images/idle.png")
    self.jump = gr.newImage("images/jump.png")
    self.duckImage = gr.newImage("images/duck.png")
+   
+   world:add(self, x, y, 10, 10)
+   self:init(x, y)
+end
+
+function Player:init(x, y)
    self.x = x
    self.y = y
    self.w = self.image:getWidth()
@@ -22,8 +28,7 @@ function Player:initialize(name, x, y, imagePath)
    self.speed = 0
    self.velocity = { x = 1, y = 0 }
    self.duck = false
-   
-   world:add(self, self.x, self.y, self.w, self.h)
+   world:update(self, self.x, self.y, self.w, self.h)
 end
 
 function Player:update(dt)
@@ -86,17 +91,14 @@ function Player:draw()
    end
 
    if self.duck then
-      self.w = self.image:getWidth()
       self.h = self.duckImage:getHeight()
       gr.draw(self.duckImage,
               self.x, self.y)
    elseif not ground then
-      self.w = self.jump:getWidth()
       self.h = self.jump:getHeight()
       gr.draw(self.jump,
               self.x, self.y)
    else
-      self.w = self.image:getWidth()
       self.h = self.image:getHeight()
       world:update(self, self.x, self.y, self.w, self.h)
       gr.draw(self.image,
