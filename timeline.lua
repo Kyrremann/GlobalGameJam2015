@@ -22,16 +22,18 @@ local function lmap(t, a1, a2, b1, b2)
    return b1 + (((t - a1) / (a2 - a1)) * (b2 - b1))
 end
 
-function tl.startrecord()
-   print('start recording')
-   start = ti.getTime()
-end
-
 function tl.reset()
    dots = {}
    dtloc = 0
+   ptime = nil
    jumptimer = 0
    state = 'running'
+end
+
+function tl.startrecord()
+   print('start recording')
+   tl.reset()
+   start = ti.getTime()
 end
 
 function tl.endrecord()
