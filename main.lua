@@ -90,6 +90,7 @@ function love.keyreleased(key)
       if key == 'd' or key == 'right' then
          if not p.playing then
             p:playitoff(tl.rec)
+            tl.playback()
             tl.endrecord()
          end
       elseif key == 's' or key == 'down' then

@@ -4,10 +4,12 @@ local tl = {} -- timeline namespace
 local dots = {} -- dots to draw
 local start = nil -- start time
 local dtloc = 0 -- how much time has passed
+local ptime = nil -- playback time
 
 local jumptimer = 0 -- jump timer (0 is grounded)
 local state = 'running' -- player state
 local maxtime = 12
+local dotfreq = 0.025 -- dot draw frequency
 
 tl.rec = {} -- event record
 
@@ -41,8 +43,12 @@ function tl.endrecord()
    start = nil
 end
 
+function tl.playback()
+   ptime = 0
+end
+
 function tl.event(event)
-   local JUMPDURATION = 0.3
+   local JUMPDURATION = 0.8
 
    if start and not (state == 'jumping') then
       print(event, ' at ', timedt())
@@ -73,12 +79,17 @@ function tl.update(dt)
       end
    end
 
+   -- we are in playback
+   if ptime then
+      ptime = ptime + dt
+   end
+
    if start then
-      local FREQ = 0.025
+
       local OFFSET = 15
 
-      if dtloc >= FREQ then
-         dtloc = dtloc - FREQ
+      if dtloc >= dotfreq then
+         dtloc = dtloc - dotfreq
 
          local dot = {x=timedt(),y=0}
 
@@ -102,6 +113,7 @@ function tl.draw()
    local OFFSET = 50
    local WEIGHT = 5
 
+   gr.setColor(255, 255, 255)
    gr.setLineWidth(WEIGHT * 2)
 
    for i=1,#dots-1 do
@@ -117,6 +129,27 @@ function tl.draw()
          lmap(dots[i+1].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
          OFFSET + dots[i+1].y
       )
+   end
+
+   if ptime then
+      local lim = math.min(#dots-1, math.floor(ptime / dotfreq))
+
+      gr.setColor(255, 0, 0)
+
+      for i=1,lim do
+         gr.circle(
+            'fill',
+            lmap(dots[i].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
+            OFFSET + dots[i].y,
+            WEIGHT
+         )
+         gr.line(
+            lmap(dots[i].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
+            OFFSET + dots[i].y,
+            lmap(dots[i+1].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
+            OFFSET + dots[i+1].y
+         )
+      end
    end
 end
 
