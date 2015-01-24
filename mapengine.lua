@@ -51,11 +51,17 @@ function Engine:draw()
    for y=1, #m do
       for x=1, #m[y] do
 	 gr.setColor(250, 250, 250)
+         mode = 'line'
+
          local shape = self.shapes[y][x]
          if shape then
+            if shape.win then
+               gr.setColor(255, 255, 0)
+               mode = 'fill'
+            end
             if shape.x > gr.getWidth() then break end
             if shape.x > 0 then
-               gr.rectangle("line",
+               gr.rectangle(mode,
                             shape.x, shape.y,
                             shape.w, shape.h)
             end
@@ -94,9 +100,19 @@ function Engine:start(level)
       self.shapes[y] = {}
       for x, vx in ipairs(vy) do
          if vx == 1 then
+            -- normal block
             local shape = { 
                x = x * GRID_SIZE, y = y * GRID_SIZE, 
                w = GRID_SIZE, h = GRID_SIZE
+            }
+            self.shapes[y][x] = shape
+            world:add(shape, shape.x, shape.y, shape.w, shape.h)
+         elseif vx == 2 then
+            -- win block
+            local shape = {
+               x = x * GRID_SIZE, y = y * GRID_SIZE,
+               w = GRID_SIZE, h = GRID_SIZE,
+               win = true
             }
             self.shapes[y][x] = shape
             world:add(shape, shape.x, shape.y, shape.w, shape.h)
