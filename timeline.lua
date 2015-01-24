@@ -10,6 +10,7 @@ local jumptimer = 0 -- jump timer (0 is grounded)
 local state = 'running' -- player state
 local maxtime = 12
 local dotfreq = 0.025 -- dot draw frequency
+local weight = 5 -- timeline weight
 
 tl.rec = {} -- event record
 
@@ -111,19 +112,15 @@ function tl.update(dt)
    end
 end
 
-function tl.draw()
+function drawdots(lim)
    local OFFSET = 50
-   local WEIGHT = 5
 
-   gr.setColor(255, 255, 255)
-   gr.setLineWidth(WEIGHT * 2)
-
-   for i=1,#dots-1 do
+   for i=1,lim do
       gr.circle(
          'fill',
          lmap(dots[i].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
          OFFSET + dots[i].y,
-         WEIGHT
+         weight
       )
       gr.line(
          lmap(dots[i].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
@@ -132,26 +129,19 @@ function tl.draw()
          OFFSET + dots[i+1].y
       )
    end
+end
+
+function tl.draw()
+
+
+   gr.setColor(255, 255, 255)
+   gr.setLineWidth(weight * 2)
+
+   drawdots(#dots-1)
 
    if ptime then
-      local lim = math.min(#dots-1, math.floor(ptime / dotfreq))
-
       gr.setColor(255, 0, 0)
-
-      for i=1,lim do
-         gr.circle(
-            'fill',
-            lmap(dots[i].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
-            OFFSET + dots[i].y,
-            WEIGHT
-         )
-         gr.line(
-            lmap(dots[i].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
-            OFFSET + dots[i].y,
-            lmap(dots[i+1].x, 0, maxtime, OFFSET, gr.getWidth() - OFFSET),
-            OFFSET + dots[i+1].y
-         )
-      end
+      drawdots(math.min(#dots-1, math.floor(ptime / dotfreq)))
    end
 end
 
