@@ -70,7 +70,7 @@ function love.keypressed(key, isrepeat)
 
    elseif gameMode == GAME then
       if key == "escape" then
-         gameMode = END
+         gameMode = MENU
          return
       elseif key == 'f9' then
          debug = not debug
@@ -107,6 +107,8 @@ function love.keyreleased(key)
          tl.event('unduck')
       elseif key == 'r' then
          resetLevel()
+      elseif key == 'n' then
+         nextLevel()
       end
    elseif gameMode == END then
    end
@@ -135,7 +137,7 @@ function resetLevel()
 
    tl.reset()
    p:init(100, 100)
-   mapengine:start(1)
+   mapengine:start(mapengine.level)
 end
 
 function completedLevel(status)
@@ -143,5 +145,16 @@ function completedLevel(status)
       mapengine.status = status
    elseif status == 'lost' then
       mapengine.status = status
+   end
+end
+
+function nextLevel()
+   if mapengine.status == 'win' then
+   ground = false
+   zero_ground = false
+
+   tl.reset()
+   p:init(100, 100)
+   mapengine:start(mapengine.level + 1)
    end
 end
