@@ -14,7 +14,7 @@ function Player:initialize(name, x, y)
    self.name = name
    self.image = gr.newImage("images/idle2.png")
    self.jump = gr.newImage("images/jump2.png")
-   self.duckImage = gr.newImage("images/duck.png")
+   self.duckImage = gr.newImage("images/duck2.png")
    
    world:add(self, x, y, 10, 10)
    self:init(x, y)
@@ -130,7 +130,10 @@ function Player:draw()
       gr.draw(self.jump,
               self.x, self.y)
    else
+      local temp = self.h
       self.h = self.image:getHeight()
+      local diff = self.h - temp
+      self.y = self.y - diff
       world:update(self, self.x, self.y, self.w, self.h)
       gr.draw(self.image,
               self.x, self.y)
