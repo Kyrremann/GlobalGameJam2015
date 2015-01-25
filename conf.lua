@@ -7,7 +7,7 @@ function love.conf(t)
    t.version = "0.9.1"                -- The LÖVE version this game was made for (string)
    t.console = false                  -- Attach a console (boolean, Windows only)
 
-   t.window.title = "Global Game Jam"        -- The window title (string)
+   t.window.title = "The Little Lost Giraffe"        -- The window title (string)
    t.window.icon = nil                -- Filepath to an image to use as the window's icon (string)
    t.window.width = 1200               -- The window width (number)
    t.window.height = 700              -- The window height (number)
