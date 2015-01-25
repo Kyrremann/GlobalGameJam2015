@@ -79,7 +79,7 @@ function love.keypressed(key, isrepeat)
          debug = not debug
          return
       elseif (key == 'd' or key == 'right') and not isrepeat then
-         if not p.playing then
+         if (not p.playing) and (not mapengine.status) then
             tl.startrecord()
          end
       elseif (key == 'w' or key == 'up') and not isrepeat then
@@ -101,7 +101,7 @@ function love.keyreleased(key)
    if gameMode == MENU then
    elseif gameMode == GAME then
       if key == 'd' or key == 'right' then
-         if not p.playing then
+         if tl.start and not (p.playing) and (not mapengine.status) then
             p:playitoff(tl.rec)
             tl.playback()
             tl.endrecord()
