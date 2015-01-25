@@ -45,7 +45,7 @@ function Engine:update(dt)
 end
 
 local function printGoal(goal)
-   gr.setColor(255, 255, 255)
+   gr.setColor(0, 0, 0)
    gr.setFont(amaticRegular64)
    gr.printf(goal,
              0, 100, gr.getWidth(), "center")
@@ -81,12 +81,12 @@ function Engine:draw()
    if not self.status then
       printGoal(cl.goal)
    elseif self.status == 'lost' then
-      gr.setColor(255, 255, 255)
+      gr.setColor(0, 0, 0)
       gr.setFont(amaticBold128)
       gr.printf("Sorry, you lost!\n'R'etry?",
                 0, 100, gr.getWidth(), "center")
    elseif self.status == 'win' then
-      gr.setColor(255, 255, 255)
+      gr.setColor(0, 0, 0)
       gr.setFont(amaticBold128)
       gr.printf("Victory!!\n'N'ext level?",
                 0, 100, gr.getWidth(), "center")
@@ -100,7 +100,6 @@ function Engine:removeShapes()
    
    for y=1, #m do
       for x=1, #m[y] do
-	 gr.setColor(250, 250, 250)
          local shape = self.shapes[y][x]
          if shape then
             world:remove(shape)

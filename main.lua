@@ -8,6 +8,8 @@ function love.load()
 
    -- sounds
    soundJump = au.newSource("sounds/jump.wav")
+   loop = au.newSource("sounds/giraffe-loop.ogg")
+   loop:setLooping(true)
 
    local bump = require "bump"
    world = bump.newWorld(100)
@@ -62,6 +64,7 @@ function love.keypressed(key, isrepeat)
          return
       elseif key == "return" then
          gameMode = GAME
+         au.play(loop)
          return
       elseif key == 'f9' then
          debug = not debug
@@ -70,6 +73,7 @@ function love.keypressed(key, isrepeat)
 
    elseif gameMode == GAME then
       if key == "escape" then
+         au.stop()
          gameMode = MENU
          return
       elseif key == 'f9' then
@@ -115,10 +119,12 @@ function love.keyreleased(key)
 end
 
 function drawBackground()
+   gr.setBackgroundColor(255, 255, 255)
 end
 
 function drawTitle()
-   gr.setColor(255, 255, 255)
+   -- gr.setColor(255, 255, 255)
+   gr.setColor(0, 0, 0)
    gr.setFont(amaticBold128)
    gr.printf("Some people's",
              0, gr.getHeight() / 15, gr.getWidth(), "center")
