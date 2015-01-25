@@ -10,14 +10,14 @@ local playt = 0 -- time since playback started
 
 function Player:initialize(name, x, y)
    self.name = name
-   self.idle = gr.newImage("images/idle2.png")
+   self.idle = gr.newImage("images/idle3.png")
    self.run = {
-      gr.newImage("images/run1.png"),
-      gr.newImage("images/run2.png"),
-      gr.newImage("images/run2.png")
+      gr.newImage("images/run3.png"),
+      gr.newImage("images/run4.png"),
+      gr.newImage("images/run4.png")
    }
-   self.jump = gr.newImage("images/jump2.png")
-   self.duckImage = gr.newImage("images/duck2.png")
+   self.jump = gr.newImage("images/jump3.png")
+   self.duckImage = gr.newImage("images/duck3.png")
    self.anim = {
       tile = 1,
       duration = .4,

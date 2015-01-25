@@ -62,6 +62,7 @@ function love.keypressed(key, isrepeat)
          love.event.push('quit')
          return
       elseif key == "return" then
+         mapengine.level = 1
          gameMode = GAME
          au.play(loop)
          return
