@@ -49,8 +49,8 @@ function love.draw()
    if gameMode == MENU then
       drawTitle()
    elseif gameMode == GAME then
-      mapengine:draw()
       p:draw()
+      mapengine:draw()
       tl.draw()
    elseif gameMode == END then
    end
