@@ -27,5 +27,9 @@ function M:addFirework(x, y)
   table.insert(self.Fireworks, Firework(x, y))
 end
 
+function M:clear()
+   self.Fireworks = {}
+end
+
 return M
 

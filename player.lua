@@ -6,8 +6,6 @@ Player.static.JUMP = 1
 Player.static.DUCK = 2
 Player.static.UNDUCK = 3
 
-local state = 'idle' -- player state
-local rec = nil -- playback record
 local playt = 0 -- time since playback started
 
 function Player:initialize(name, x, y)
@@ -39,6 +37,7 @@ function Player:init(x, y)
    self.velocity = { x = 1, y = 0 }
    self.duck = false
    self.playing = false
+   self.rec = nil
    world:update(self, self.x, self.y, self.w, self.h)
 end
 
@@ -67,11 +66,11 @@ function Player:wintile()
 end
 
 function Player:update(dt)
-   if state == 'playing' then
+   if self.playing then
       playt = playt + dt
 
-      if #rec > 0 then
-         local event = rec[1]
+      if #self.rec > 0 then
+         local event = self.rec[1]
 
          if event.at <= playt then
             if event.action == 'jump' then
@@ -87,10 +86,10 @@ function Player:update(dt)
                else
                   completedLevel('lost')
                end
-               state = 'idle'
+               self.playing = false
             end
 
-            table.remove(rec, 1)
+            table.remove(self.rec, 1)
          end
       end
    end
@@ -186,9 +185,8 @@ end
 function Player:playitoff(record)
    self.playing = true
    self.speed = 250
-   rec = record
+   self.rec = record
    playt = 0
-   state = 'playing'
 end
 
 return Player

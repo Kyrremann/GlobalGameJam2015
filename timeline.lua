@@ -30,6 +30,7 @@ function tl.reset()
    ptime = nil
    jumptimer = 0
    state = 'running'
+   tl.rec = {}
 end
 
 function tl.startrecord()
