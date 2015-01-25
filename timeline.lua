@@ -35,18 +35,22 @@ function tl.reset()
 end
 
 function tl.startrecord()
-   print('start recording')
+   if debug then
+      print('start recording')
+   end
    tl.reset()
    tl.start = ti.getTime()
 end
 
 function tl.endrecord()
-   print('end recording')
    table.insert(tl.rec, {at=timedt(), action='stop'})
-   for k, v in pairs(tl.rec) do
-      print(k, v.at, v.action)
-   end
    tl.start = nil
+   if debug then
+      print('end recording')
+      for k, v in pairs(tl.rec) do
+         print(k, v.at, v.action)
+      end
+   end
 end
 
 function tl.playback()
@@ -57,7 +61,9 @@ function tl.event(event)
    local JUMPDURATION = 0.6
 
    if tl.start and not (state == 'jumping') then
-      print(event, ' at ', timedt())
+      if debug then
+         print(event, ' at ', timedt())
+      end
       table.insert(tl.rec, {at=timedt(), action=event})
 
       if event == 'duck' then
