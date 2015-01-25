@@ -37,7 +37,9 @@ function Engine:update(dt)
             local shape = self.shapes[y][x]
             if shape then
                shape.x = shape.x - p.speed * dt
-               world:update(shape, shape.x, shape.y)
+               if not shape.ghost then
+                  world:update(shape, shape.x, shape.y)
+               end
             end
          end
       end
@@ -101,7 +103,7 @@ function Engine:removeShapes()
    for y=1, #m do
       for x=1, #m[y] do
          local shape = self.shapes[y][x]
-         if shape then
+         if shape and not shape.ghost then
             world:remove(shape)
          end
       end
@@ -141,10 +143,24 @@ function Engine:start(level)
                shape.image = gr.newImage("images/jord4.png")
             elseif vx == 6 then
                shape.image = gr.newImage("images/jord5.png")
+            elseif vx == 7 then
+               shape.image = gr.newImage("images/hav.png")
+               shape.ghost = true
+            elseif vx == 8 then
+               shape.image = gr.newImage("images/hav6.png")
+               shape.ghost = true
+            elseif vx == 9 then
+               shape.image = gr.newImage("images/hav2.png")
+               shape.ghost = true
+            elseif vx == 10 then
+               shape.image = gr.newImage("images/hav3.png")
+               shape.ghost = true
             end
             
             self.shapes[y][x] = shape
-            world:add(shape, shape.x, shape.y, shape.w, shape.h)
+            if not shape.ghost then
+               world:add(shape, shape.x, shape.y, shape.w, shape.h)
+            end
          end
       end
    end

@@ -5,6 +5,7 @@ function love.load()
    amaticRegular64 = gr.newFont("fonts/AmaticSC-Regular.ttf", 64)
    amaticBold64 = gr.newFont("fonts/Amatic-Bold.ttf", 64)
    amaticBold128 = gr.newFont("fonts/Amatic-Bold.ttf", 128)
+   amaticBold160 = gr.newFont("fonts/Amatic-Bold.ttf", 160)
 
    -- sounds
    soundJump = au.newSource("sounds/jump.wav")
@@ -19,7 +20,6 @@ function love.load()
    ground = false
    zero_ground = false
 
-   Player = require "player"
    p = Player:new('Sjiraff', 100, 100)
    
    MENU = 0
@@ -30,7 +30,6 @@ function love.load()
 
    gameMode = MENU
 
-   MapEngine = require "mapengine"
    mapengine = MapEngine:new("levels")
    mapengine:start(1)
 end
@@ -119,22 +118,24 @@ function love.keyreleased(key)
 end
 
 function drawBackground()
-   gr.setBackgroundColor(255, 255, 255)
+   gr.setBackgroundColor(255, 120, 0)
 end
 
 function drawTitle()
    -- gr.setColor(255, 255, 255)
    gr.setColor(0, 0, 0)
-   gr.setFont(amaticBold128)
-   gr.printf("Some people's",
-             0, gr.getHeight() / 15, gr.getWidth(), "center")
    gr.setFont(amaticBold64)
-   gr.printf("contribution to",
-             0, gr.getHeight() / 3.7, gr.getWidth(), "center")
+   gr.printf("Some peoples' contribution to the",
+             0, gr.getHeight() / 15, gr.getWidth(), "center")
    gr.setFont(amaticBold128)
    gr.printf("Global Game Jam 2015",
+             0, gr.getHeight() / 6, gr.getWidth(), "center")
+   gr.setFont(amaticBold160)
+   gr.setColor(math.random(100, 155), 
+               math.random(100, 155), 
+               math.random(100, 155))
+   gr.printf("The Little Lost Giraffe",
              0, gr.getHeight() / 2.5, gr.getWidth(), "center")
-   gr.setFont(amaticRegular64)
 end
 
 function resetLevel()

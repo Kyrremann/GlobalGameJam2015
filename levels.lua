@@ -1,6 +1,17 @@
 return {
    {
       title = "What to do now?",
+      goal = "",
+      map = {
+	 {0,0,0,0, 0,0,0,0},
+	 {0,0,0,0, 0,0,0,0},
+	 {1,1,1,1, 8,0,0,0},
+	 {0,0,0,0, 9,0,0,0},
+	 {0,0,0,0,10,7,1,2}
+      }
+   },
+   {
+      title = "What to do now?",
       goal = "Record giraffe movement with the arrows.\n'Right' start the record, release to start the movements!\nCan you stop at the yellow?",
       map = {
 	 {0,0,0,0,0,0,0},

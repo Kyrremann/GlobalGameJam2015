@@ -8,6 +8,10 @@ so = love.sound
 au = love.audio
 
 tl = require 'timeline'
+Player = require "player"
+MapEngine = require "mapengine"
+
+require "math"
 
 ke.setKeyRepeat(.01, .01)
 
