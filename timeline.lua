@@ -46,7 +46,7 @@ function tl.endrecord()
    for k, v in pairs(tl.rec) do
       print(k, v.at, v.action)
    end
-   tl.start = nli
+   tl.start = nil
 end
 
 function tl.playback()
