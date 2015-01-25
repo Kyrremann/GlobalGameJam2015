@@ -139,8 +139,10 @@ function Player:draw()
    end
 
    if self.duck then
-      print(self.h, self.duckImage:getHeight())
+      local temp = self.h
       self.h = self.duckImage:getHeight()
+      local diff = temp - self.h
+      self.y = self.y + diff
       gr.draw(self.duckImage,
               self.x, self.y)
    elseif not ground then
