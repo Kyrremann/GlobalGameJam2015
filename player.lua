@@ -12,10 +12,20 @@ local playt = 0 -- time since playback started
 
 function Player:initialize(name, x, y)
    self.name = name
-   self.image = gr.newImage("images/idle2.png")
+   self.idle = gr.newImage("images/idle2.png")
+   self.run = {
+      gr.newImage("images/run1.png"),
+      gr.newImage("images/run2.png"),
+      gr.newImage("images/run2.png")
+   }
    self.jump = gr.newImage("images/jump2.png")
    self.duckImage = gr.newImage("images/duck2.png")
-   
+   self.anim = {
+      tile = 1,
+      duration = .4,
+      timer = 0
+   }
+
    world:add(self, x, y, 10, 10)
    self:init(x, y)
 end
@@ -23,8 +33,8 @@ end
 function Player:init(x, y)
    self.x = x
    self.y = y
-   self.w = self.image:getWidth()
-   self.h = self.image:getHeight()
+   self.w = self.idle:getWidth()
+   self.h = self.idle:getHeight()
    self.speed = 0
    self.velocity = { x = 1, y = 0 }
    self.duck = false
@@ -100,6 +110,15 @@ function Player:update(dt)
       elseif dx ~= self.x then
          self.speed = 0
       end
+
+      self.anim.timer = self.anim.timer + dt
+      if self.anim.timer > self.anim.duration then
+         self.anim.tile = self.anim.tile + 1
+         self.anim.timer = 0
+         if self.anim.tile > 2 then
+            self.anim.tile = 1
+         end
+      end
    end
    
    if not zero_ground then
@@ -129,13 +148,21 @@ function Player:draw()
       self.h = self.jump:getHeight()
       gr.draw(self.jump,
               self.x, self.y)
-   else
+   elseif self.speed > 0 then
       local temp = self.h
-      self.h = self.image:getHeight()
+      self.h = self.run[self.anim.tile]:getHeight()
       local diff = self.h - temp
       self.y = self.y - diff
       world:update(self, self.x, self.y, self.w, self.h)
-      gr.draw(self.image,
+      gr.draw(self.run[self.anim.tile],
+              self.x, self.y)
+   else
+      local temp = self.h
+      self.h = self.idle:getHeight()
+      local diff = self.h - temp
+      self.y = self.y - diff
+      world:update(self, self.x, self.y, self.w, self.h)
+      gr.draw(self.idle,
               self.x, self.y)
    end
    world:update(self, self.x, self.y, self.w, self.h)
