@@ -112,6 +112,12 @@ function love.keyreleased(key)
          resetLevel()
       elseif key == 'n' then
          nextLevel()
+      elseif key == 'pageup' then
+         mapengine.level = mapengine.level + 1
+         resetLevel()
+      elseif key == 'pagedown' then
+         mapengine.level = mapengine.level - 1
+         resetLevel()
       end
    elseif gameMode == END then
    end
