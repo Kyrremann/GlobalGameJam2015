@@ -155,6 +155,9 @@ end
 
 function completedLevel(status)
    if status == 'win' then
+      if mapengine.level + 1 > #mapengine.map then
+         gameMode = MENU
+      end
       mapengine.status = status
    elseif status == 'lost' then
       mapengine.status = status
