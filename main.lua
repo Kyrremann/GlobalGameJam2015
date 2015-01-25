@@ -32,6 +32,8 @@ function love.load()
 
    mapengine = MapEngine:new("levels")
    mapengine:start(1)
+
+   easteregg = false
 end
 
 local fwt = 0 -- firework timer
@@ -83,11 +85,16 @@ function love.keypressed(key, isrepeat)
          return
       elseif key == "return" then
          mapengine.level = 1
+         resetLevel()
          gameMode = GAME
          au.play(loop)
          return
       elseif key == 'f9' then
          debug = not debug
+         return
+      elseif key == 'f10' then
+         easteregg = not easteregg
+         p:initImages()
          return
       end
 
@@ -98,6 +105,10 @@ function love.keypressed(key, isrepeat)
          return
       elseif key == 'f9' then
          debug = not debug
+         return
+      elseif key == 'f10' then
+         easteregg = not easteregg
+         p:initImages()
          return
       elseif (key == 'd' or key == 'right') and not isrepeat then
          if (not p.playing) and (not mapengine.status) then
@@ -135,9 +146,15 @@ function love.keyreleased(key)
          nextLevel()
       elseif key == 'pageup' then
          mapengine.level = mapengine.level + 1
+         if mapengine.level > #mapengine.map then
+            mapengine.level = #mapengine.map
+         end
          resetLevel()
       elseif key == 'pagedown' then
          mapengine.level = mapengine.level - 1
+         if mapengine.level < #mapengine.map then
+            mapengine.level = 1
+         end
          resetLevel()
       end
    elseif gameMode == END then
