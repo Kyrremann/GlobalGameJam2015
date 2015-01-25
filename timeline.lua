@@ -2,7 +2,6 @@ local t = 0 -- time since start
 local tl = {} -- timeline namespace
 
 local dots = {} -- dots to draw
-local start = nil -- start time
 local dtloc = 0 -- how much time has passed
 local ptime = nil -- playback time
 
@@ -13,10 +12,11 @@ local dotfreq = 0.025 -- dot draw frequency
 local weight = 5 -- timeline weight
 local margin = 50 -- margin to timeline dots
 
+tl.start = nil -- start time
 tl.rec = {} -- event record
 
 local function timedt()
-   return ti.getTime() - start
+   return ti.getTime() - tl.start
 end
 
 -- Map t from range (a1, a2) into (b1, b2)
@@ -31,21 +31,26 @@ function tl.reset()
    jumptimer = 0
    state = 'running'
    tl.rec = {}
+   tl.start = 0
 end
 
 function tl.startrecord()
-   print('start recording')
+   if debug then
+      print('start recording')
+   end
    tl.reset()
-   start = ti.getTime()
+   tl.start = ti.getTime()
 end
 
 function tl.endrecord()
-   print('end recording')
    table.insert(tl.rec, {at=timedt(), action='stop'})
-   for k, v in pairs(tl.rec) do
-      print(k, v.at, v.action)
+   tl.start = nil
+   if debug then
+      print('end recording')
+      for k, v in pairs(tl.rec) do
+         print(k, v.at, v.action)
+      end
    end
-   start = nil
 end
 
 function tl.playback()
@@ -55,8 +60,10 @@ end
 function tl.event(event)
    local JUMPDURATION = 0.6
 
-   if start and not (state == 'jumping') then
-      print(event, ' at ', timedt())
+   if tl.start and not (state == 'jumping') then
+      if debug then
+         print(event, ' at ', timedt())
+      end
       table.insert(tl.rec, {at=timedt(), action=event})
 
       if event == 'duck' then
@@ -89,7 +96,7 @@ function tl.update(dt)
       ptime = ptime + dt
    end
 
-   if start then
+   if tl.start then
 
       local OFFSET = 15
 
