@@ -69,7 +69,9 @@ local function printGoal(goal)
 end
 
 function Engine:draw()
-   fw:draw()
+   if self.status == 'win' then
+      fw:draw()
+   end
 
    gr.setLineWidth(1)
    local cl = self.map[self.level]
@@ -128,6 +130,8 @@ function Engine:removeShapes()
 end
 
 function Engine:start(level)
+   fw:clear()
+
    if self.shapes and #self.shapes > 0 then
       self:removeShapes()
    end
