@@ -187,19 +187,14 @@ function Engine:start(level)
                shape.ghost = true
             elseif vx == 52 then
                shape.image = gr.newImage("images/tree/middle.png")
-               shape.ghost = true
             elseif vx == 53 then
                shape.image = gr.newImage("images/tree/left_branch_small.png")
-               shape.ghost = true
             elseif vx == 54 then
                shape.image = gr.newImage("images/tree/right_branch_small.png")
-               shape.ghost = true
             elseif vx == 55 then
                shape.image = gr.newImage("images/tree/left_branch_big.png")
-               shape.ghost = true
             elseif vx == 56 then
                shape.image = gr.newImage("images/tree/right_branch_big.png")
-               shape.ghost = true
             end
             
             self.shapes[y][x] = shape
