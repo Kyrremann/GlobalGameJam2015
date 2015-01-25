@@ -53,6 +53,9 @@ function love.draw()
       p:draw()
       tl.draw()
    elseif gameMode == END then
+      gr.setFont(amaticBold128)
+      gr.printf("Congratulation!\nThe giraffe is now no longer lost, just little...",
+                0, gr.getHeight() / 4, gr.getWidth(), "center")
    end
 end
 
@@ -157,7 +160,7 @@ end
 function completedLevel(status)
    if status == 'win' then
       if mapengine.level + 1 > #mapengine.map then
-         gameMode = MENU
+         gameMode = END
       end
       mapengine.status = status
    elseif status == 'lost' then
