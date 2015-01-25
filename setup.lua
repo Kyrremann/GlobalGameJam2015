@@ -10,6 +10,7 @@ au = love.audio
 tl = require 'timeline'
 Player = require "player"
 MapEngine = require "mapengine"
+fw = require 'firework.FireworkEngine'()
 
 require "math"
 

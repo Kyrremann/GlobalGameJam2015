@@ -34,6 +34,7 @@ function love.load()
    mapengine:start(1)
 end
 
+local fwt = 0 -- firework timer
 function love.update(dt)
    if gameMode == MENU then
    elseif gameMode == GAME then
@@ -42,9 +43,25 @@ function love.update(dt)
       tl.update(dt)
    elseif gameMode == END then
    end
+
+   if mapengine.status == 'win' then
+      fwt = fwt + dt
+      fw:update(dt)
+      if fwt > 0.2 then
+         fwt = fwt - 0.2
+         fw:addFirework(
+            GRID_SIZE + math.random(gr.getWidth() - GRID_SIZE * 2),
+            GRID_SIZE + math.random(gr.getHeight() - GRID_SIZE * 2)
+         )
+      end
+   end
 end
 
 function love.draw()
+   if mapengine.status == 'win' then
+      fw:draw()
+   end
+
    drawBackground()
    if gameMode == MENU then
       drawTitle()
@@ -54,7 +71,7 @@ function love.draw()
       tl.draw()
    elseif gameMode == END then
       gr.setFont(amaticBold128)
-      gr.printf("Congratulation!\nThe giraffe is now no longer lost, just little...",
+      gr.printf("Congratulations!\nThe giraffe is now no longer lost, just little...",
                 0, gr.getHeight() / 4, gr.getWidth(), "center")
    end
 end
