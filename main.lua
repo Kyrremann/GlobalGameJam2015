@@ -78,7 +78,7 @@ function love.draw()
    end
 end
 
-function love.keypressed(key, isrepeat)
+function love.keypressed(key, scancode, isrepeat)
    if gameMode == MENU then
       if key == "escape" then
          love.event.push('quit')
@@ -129,7 +129,7 @@ function love.keypressed(key, isrepeat)
    end
 end
 
-function love.keyreleased(key)
+function love.keyreleased(key, scancode)
    if gameMode == MENU then
    elseif gameMode == GAME then
       if key == 'd' or key == 'right' then

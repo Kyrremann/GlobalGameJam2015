@@ -4,7 +4,7 @@ function love.conf(t)
    t.url = "https://github.com/Kyrremann/GlobalGameJam2015"
 
    t.identity = nil                   -- The name of the save directory (stRing)
-   t.version = "0.9.1"                -- The LÖVE version this game was made for (string)
+   t.version = "0.10.2"               -- The LÖVE version this game was made for (string)
    t.console = false                  -- Attach a console (boolean, Windows only)
 
    t.window.title = "The Little Lost Giraffe"        -- The window title (string)
